@@ -1,5 +1,8 @@
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <string>
+#include "huffman.h"
 
 int main(int argc, char* argv[])
 {
@@ -14,11 +17,21 @@ int main(int argc, char* argv[])
 		if (strcmp("-i", argv[i]) == 0)
 		{
 			i++;
+			if (i >= argc)
+			{
+				std::cerr << "No input file specified\n";
+				exit(1);
+			}
 			infile = argv[i];
 		}
 		if (strcmp("-o", argv[i]) == 0)
 		{
 			i++;
+			if (i >= argc)
+			{
+				std::cerr << "No output file specified\n";
+				exit(1);
+			}
 			outfile = argv[i];
 		}
 	}
@@ -32,4 +45,35 @@ int main(int argc, char* argv[])
 		std::cout << "-s: Prints compression statistics.\n";
 		exit(0);
 	}
+
+    std::istream* in = &std::cin;
+    if (infile != "")
+    {
+		std::ifstream infileStream;
+        infileStream.open(infile);
+        if (!infileStream.is_open())
+        {
+            std::cerr << "Failed to open input file\n";
+            exit(1);
+        }
+        in = &infileStream;
+    }
+	std::ostream* out;
+    if (outfile != "")
+    {
+		std::ofstream outfileStream;
+		outfileStream.open(outfile);
+		out = &outfileStream;
+    }
+	else
+	{
+		std::cerr << "No output file specified\n";
+		exit(1);
+	}
+
+	auto res = read(in);
+	auto histogram = res.first;
+	auto text = res.second;
+	auto root = createTree(histogram);
+	return 0;
 }
