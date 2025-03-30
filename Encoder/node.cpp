@@ -10,7 +10,7 @@ Node::Node(const Node& other) :data(other.data), freq(other.freq)
 	if (other.right)right = new Node(*other.right);
 }
 Node::Node(uint8_t data, uint64_t freq) :data(data), freq(freq), left(nullptr), right(nullptr) {}
-Node::Node(Node left, Node right) :data('$'), freq((left.freq) + (right.freq))
+Node::Node(Node left, Node right) :data(0), freq((left.freq) + (right.freq))
 {
 	this->left = new Node(left);
 	this->right = new Node(right);
@@ -57,4 +57,24 @@ Node& Node::operator=(const Node& other)
 	if (other.right)right = new Node(*other.right);
 	else right = nullptr;
 	return *this;
+}
+
+void Node::populateCodeTable(Code* codetable, Code tmp)
+{
+	if (left)
+	{
+		tmp.push(0);
+		left->populateCodeTable(codetable, tmp);
+		tmp.pop();
+	}
+	if (right)
+	{
+		tmp.push(1);
+		right->populateCodeTable(codetable, tmp);
+		tmp.pop();
+	}
+	if (!left && !right)
+	{
+		codetable[data] = tmp;
+	}
 }

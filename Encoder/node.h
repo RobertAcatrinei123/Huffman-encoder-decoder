@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include "code.h"
 
 class Node
 {
@@ -17,4 +18,5 @@ public:
 	Node& operator=(const Node& other);
 	void debug()const;
 	uint64_t getFreq()const;
+	void populateCodeTable(Code *codetable,Code tmp);
 };

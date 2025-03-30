@@ -4,6 +4,7 @@
 #include <string>
 #include "huffman.h"
 #include "defines.h"
+#include "code.h"
 
 int main(int argc, char* argv[])
 {
@@ -74,9 +75,10 @@ int main(int argc, char* argv[])
 	auto histogram = res.first;
 	auto text = res.second;
 	auto root = createTree(histogram);
-	long long tmp = MAGIC;
-
-	out.write((char*) & tmp, 4);
+	uint32_t tmp = MAGIC;
+	out.write((char*) & tmp, sizeof(tmp));
+	Code codetable[255];
+	root->populateCodeTable(codetable,Code());
 	out.close();
 	return 0;
 }

@@ -21,3 +21,8 @@ bool Code::pop()
 	size--;
 	return bit;
 }
+
+bool Code::canPop()
+{
+	return size != 0;
+}

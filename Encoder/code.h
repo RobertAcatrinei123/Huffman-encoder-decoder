@@ -12,4 +12,5 @@ public:
 	Code(uint16_t size, uint8_t data[MAX_CODE_SIZE]);
 	void push(bool bit);
 	bool pop();
+	bool canPop();
 };
