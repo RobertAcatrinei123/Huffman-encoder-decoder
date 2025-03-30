@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include "huffman.h"
+#include "defines.h"
 
 int main(int argc, char* argv[])
 {
@@ -47,9 +48,9 @@ int main(int argc, char* argv[])
 	}
 
     std::istream* in = &std::cin;
+	std::ifstream infileStream;
     if (infile != "")
     {
-		std::ifstream infileStream;
         infileStream.open(infile);
         if (!infileStream.is_open())
         {
@@ -58,12 +59,10 @@ int main(int argc, char* argv[])
         }
         in = &infileStream;
     }
-	std::ostream* out;
+	std::ofstream out;
     if (outfile != "")
     {
-		std::ofstream outfileStream;
-		outfileStream.open(outfile);
-		out = &outfileStream;
+		out.open(outfile,std::ios::binary|std::ios::out);
     }
 	else
 	{
@@ -75,5 +74,9 @@ int main(int argc, char* argv[])
 	auto histogram = res.first;
 	auto text = res.second;
 	auto root = createTree(histogram);
+	long long tmp = MAGIC;
+
+	out.write((char*) & tmp, 4);
+	out.close();
 	return 0;
 }

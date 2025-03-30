@@ -4,16 +4,18 @@
 
 std::pair<std::vector<int>, std::string> read(std::istream* in)
 {
-	std::vector<int> result(255,0);
+	std::vector<int> result(256,0);
 	std::string str="";
 	uint8_t c;
-	while (c = in->get())
+	std::string tmp;
+	while (!in->eof())
 	{
-		if (c == 255)
-			break;
+		c = in->get();
 		str.push_back(c);
 		result[c]++;
 	}
+	result[255] = 0;
+	str.pop_back();
 	return { result ,str };
 }
 
