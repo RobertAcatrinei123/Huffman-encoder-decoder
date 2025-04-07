@@ -194,10 +194,7 @@
     <ClInclude Include="node.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="input.in">
-      <DeploymentContent>true</DeploymentContent>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </None>
+    <None Include="encoded.bin" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="input.txt" />

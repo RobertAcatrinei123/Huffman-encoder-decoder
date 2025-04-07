@@ -74,11 +74,28 @@ int main(int argc, char* argv[])
 	auto res = read(in);
 	auto histogram = res.first;
 	auto text = res.second;
+
 	auto root = createTree(histogram);
+
 	uint32_t tmp = MAGIC;
 	out.write((char*) & tmp, sizeof(tmp));
-	Code codetable[255];
+
+	Code codetable[256];
 	root->populateCodeTable(codetable,Code());
+
+	uint16_t treeSize = 0;
+
+	for (auto i : histogram)
+	{
+		if (i > 0)treeSize++;
+	}
+
+	treeSize = 2 * treeSize - 1;
+
+	out.write((char *) & treeSize, sizeof(treeSize));
+
+	root->printTree(out);
+
 	out.close();
 	return 0;
 }

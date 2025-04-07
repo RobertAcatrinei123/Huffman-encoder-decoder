@@ -29,9 +29,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="node.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="huffman.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -41,9 +38,14 @@
     <ClInclude Include="code.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="node.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="input.in" />
+    <None Include="encoded.bin">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="input.txt" />

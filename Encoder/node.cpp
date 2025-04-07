@@ -1,5 +1,6 @@
 #include "node.h"
 #include <iostream>
+#include <fstream>
 
 Node::Node() :data(0), freq(0), left(nullptr), right(nullptr) {}
 Node::Node(const Node& other) :data(other.data), freq(other.freq) 
@@ -76,5 +77,28 @@ void Node::populateCodeTable(Code* codetable, Code tmp)
 	if (!left && !right)
 	{
 		codetable[data] = tmp;
+	}
+}
+
+void Node::printTree(std::ofstream& out)
+{
+	if (left)
+	{
+		left->printTree(out);
+	}
+	if (right)
+	{
+		right->printTree(out);
+	}
+	if (right || left)
+	{
+		const char tmp = 'I';
+		out.write(&tmp, sizeof(tmp));
+	}
+	else
+	{
+		const char tmp = 'L';
+		out.write(&tmp, sizeof(tmp));
+		out.write((char *) & data, sizeof(tmp));
 	}
 }
