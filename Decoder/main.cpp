@@ -109,7 +109,19 @@ int main(int argc, char* argv[])
 
 	for (int i = 0;i < filesize;i++)
 	{
-		std::cout << root->getChar(reader);
+		if(outfile=="")std::cout << root->getChar(reader);
+		else out << root->getChar(reader);
+	}
+
+	if (statistics)
+	{
+		in.close();
+		in.open(infile);
+		in.seekg(0, std::ios::end);
+		uint64_t encodedsize = in.tellg();
+		std::cout << "Original size: " << encodedsize << "\n";
+		std::cout << "Decompressed file: " << filesize << "\n";
+		std::cout << "Space saving: " << 100.0 * (1 - double(encodedsize) / double(filesize)) << "%\n";
 	}
 
 	return 0;

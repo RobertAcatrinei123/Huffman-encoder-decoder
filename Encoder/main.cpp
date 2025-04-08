@@ -6,6 +6,7 @@
 #include "defines.h"
 #include "code.h"
 #include "printer.h"
+#include <filesystem>
 
 int main(int argc, char* argv[])
 {
@@ -51,6 +52,7 @@ int main(int argc, char* argv[])
 
     std::istream* in = &std::cin;
 	std::ifstream infileStream;
+
     if (infile != "")
     {
         infileStream.open(infile);
@@ -61,6 +63,7 @@ int main(int argc, char* argv[])
         }
         in = &infileStream;
     }
+
 	std::ofstream out;
     if (outfile != "")
     {
@@ -85,17 +88,6 @@ int main(int argc, char* argv[])
 	Code codetable[256];
 	Code tmpcode = Code();
 	root->populateCodeTable(codetable,tmpcode);
-
-	for (int i = 0;i < 256;i++)
-	{
-		if (histogram[i] > 0)
-		{
-			std::cerr << uint8_t(i) << ' ';
-			auto tmp = codetable[i];
-			while (tmp.canPop())std::cerr << tmp.pop();
-			std::cerr << '\n';
-		}
-	}
 
 	uint16_t treeSize = 0;
 
@@ -127,7 +119,19 @@ int main(int argc, char* argv[])
 		}
 	}
 	printer.flush();
-
+	out.flush();
 	out.close();
+
+	if (statistics)
+	{
+		std::ifstream tmpin(outfile);
+		tmpin.seekg(0, std::ios::end);
+		uint64_t encodedsize = tmpin.tellg();
+		std::cerr << "Original size: " << filesize << " bytes\n";
+		std::cerr << "Compressed size: " << encodedsize << " bytes\n";
+		std::cerr << "Space saving: " << 100.0 * (1 - double(encodedsize) / double(filesize)) << "%\n";
+	}
+	
+
 	return 0;
 }
