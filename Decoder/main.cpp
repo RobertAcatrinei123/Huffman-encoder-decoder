@@ -5,6 +5,7 @@
 #include "defines.h"
 #include "node.h"
 #include <stack>
+#include "reader.h"
 
 int main(int argc, char* argv[])
 {
@@ -68,8 +69,6 @@ int main(int argc, char* argv[])
 	uint32_t tmp;
 	in.read((char*)&tmp, sizeof(tmp));
 
-	std::cerr << tmp<<" "<<MAGIC<<'\n';
-
 	if (tmp != MAGIC)
 	{
 		std::cout << "MAGIC numbers don't match!\n";
@@ -103,7 +102,15 @@ int main(int argc, char* argv[])
 	auto root = new Node(s.top());
 	s.pop();
 
-	root->debug();
+	uint64_t filesize;
+	in.read((char*)&filesize, sizeof(filesize));
+
+	Reader reader{ in };
+
+	for (int i = 0;i < filesize;i++)
+	{
+		std::cout << root->getChar(reader);
+	}
 
 	return 0;
 }

@@ -2,7 +2,7 @@
 #include "node.h"
 #include <queue>
 
-std::pair<std::vector<int>, std::string> read(std::istream* in)
+std::pair<std::vector<int>, std::string> read(std::istream* in,uint64_t &filesize)
 {
 	std::vector<int> result(256,0);
 	std::string str="";
@@ -13,7 +13,9 @@ std::pair<std::vector<int>, std::string> read(std::istream* in)
 		c = in->get();
 		str.push_back(c);
 		result[c]++;
+		filesize++;
 	}
+	filesize--;
 	result[255] = 0;
 	str.pop_back();
 	return { result ,str };

@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include "reader.h"
 
 class Node
 {
@@ -16,4 +17,5 @@ public:
 	Node& operator=(const Node& other);
 	void debug()const;
 	uint64_t getFreq()const;
+	char getChar(Reader& reader)const;
 };

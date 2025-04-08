@@ -184,10 +184,12 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="node.cpp" />
+    <ClCompile Include="reader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="defines.h" />
     <ClInclude Include="node.h" />
+    <ClInclude Include="reader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="encoded.bin" />

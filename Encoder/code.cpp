@@ -16,13 +16,28 @@ void Code::push(bool bit)
 }
 bool Code::pop()
 {
+	size--;
 	bool bit = data[size/8] & (1 << (size%8));
 	data[size/8] &= ~(1 << (size%8));
-	size--;
 	return bit;
 }
 
 bool Code::canPop()
 {
 	return size != 0;
+}
+
+Code::Code(const Code& other)
+{
+	size = other.size;
+	memset(data, 0, sizeof data);
+	for (int i = 0;i < MAX_CODE_SIZE;i++)data[i] = other.data[i];
+}
+
+Code& Code::operator=(const Code& other)
+{
+	size = other.size;
+	memset(data, 0, sizeof data);
+	for (int i = 0;i < MAX_CODE_SIZE;i++)data[i] = other.data[i];
+	return *this;
 }

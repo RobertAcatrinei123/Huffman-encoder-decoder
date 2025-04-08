@@ -47,3 +47,23 @@ Node& Node::operator=(const Node& other)
 	else right = nullptr;
 	return *this;
 }
+
+char Node::getChar(Reader& reader)const
+{
+	if (left == nullptr && right == nullptr)
+	{
+		return data;
+	}
+	else
+	{
+		bool bit = reader.nextBit();
+		if (bit)
+		{
+			return right->getChar(reader);
+		}
+		else
+		{
+			return left->getChar(reader);
+		}
+	}
+}

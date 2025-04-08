@@ -60,7 +60,7 @@ Node& Node::operator=(const Node& other)
 	return *this;
 }
 
-void Node::populateCodeTable(Code* codetable, Code tmp)
+void Node::populateCodeTable(Code* codetable, Code &tmp)
 {
 	if (left)
 	{

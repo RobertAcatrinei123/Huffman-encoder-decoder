@@ -186,12 +186,14 @@
     <ClCompile Include="huffman.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="node.cpp" />
+    <ClCompile Include="printer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code.h" />
     <ClInclude Include="defines.h" />
     <ClInclude Include="huffman.h" />
     <ClInclude Include="node.h" />
+    <ClInclude Include="printer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="encoded.bin" />

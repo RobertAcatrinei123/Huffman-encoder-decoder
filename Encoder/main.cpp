@@ -5,6 +5,7 @@
 #include "huffman.h"
 #include "defines.h"
 #include "code.h"
+#include "printer.h"
 
 int main(int argc, char* argv[])
 {
@@ -71,7 +72,8 @@ int main(int argc, char* argv[])
 		exit(1);
 	}
 
-	auto res = read(in);
+	uint64_t filesize = 0;
+	auto res = read(in,filesize);
 	auto histogram = res.first;
 	auto text = res.second;
 
@@ -81,7 +83,19 @@ int main(int argc, char* argv[])
 	out.write((char*) & tmp, sizeof(tmp));
 
 	Code codetable[256];
-	root->populateCodeTable(codetable,Code());
+	Code tmpcode = Code();
+	root->populateCodeTable(codetable,tmpcode);
+
+	for (int i = 0;i < 256;i++)
+	{
+		if (histogram[i] > 0)
+		{
+			std::cerr << uint8_t(i) << ' ';
+			auto tmp = codetable[i];
+			while (tmp.canPop())std::cerr << tmp.pop();
+			std::cerr << '\n';
+		}
+	}
 
 	uint16_t treeSize = 0;
 
@@ -93,8 +107,26 @@ int main(int argc, char* argv[])
 	treeSize = 2 * treeSize - 1;
 
 	out.write((char *) & treeSize, sizeof(treeSize));
-
 	root->printTree(out);
+
+	out.write((char *) &filesize, sizeof(filesize));
+
+	Printer printer{ out };
+
+	for (char c : text)
+	{
+		auto tmp = codetable[c];
+		Code tmprev;
+		while (tmp.canPop())
+		{
+			tmprev.push(tmp.pop());
+		}
+		while (tmprev.canPop())
+		{
+			printer.print(tmprev.pop());
+		}
+	}
+	printer.flush();
 
 	out.close();
 	return 0;

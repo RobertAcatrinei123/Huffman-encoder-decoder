@@ -19,6 +19,6 @@ public:
 	Node& operator=(const Node& other);
 	void debug()const;
 	uint64_t getFreq()const;
-	void populateCodeTable(Code *codetable,Code tmp);
+	void populateCodeTable(Code *codetable,Code &tmp);
 	void printTree(std::ofstream &out);
 };
